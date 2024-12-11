@@ -1,18 +1,9 @@
-from datetime import datetime
 from unittest import TestCase
 
 import pytest
-
 from src.base_page import BasePage
+
 from potion import Potion
-from src.filter.condition.date_condition import DateCondition
-from src.filter.condition.string_condition import StringCondition
-from src.filter.filter_builder import FilterBuilder
-from src.properties.cover import Cover
-from src.properties.last_edited_time import LastEditedTime
-from src.properties.title import Title
-from src.properties.url import Url
-from src.datetime_utils import JST
 
 
 class TestClientWrapper(TestCase):
