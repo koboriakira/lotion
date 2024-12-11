@@ -2,9 +2,7 @@ from typing import Any
 
 from src.properties.button import Button
 from src.properties.checkbox import Checkbox
-from src.properties.created_time import CreatedTime
 from src.properties.date import Date
-from src.properties.last_edited_time import LastEditedTime
 from src.properties.multi_select import MultiSelect
 from src.properties.number import Number
 from src.properties.properties import Properties
@@ -23,6 +21,9 @@ class PropertyTranslator:
     def from_dict(properties: dict[str, dict]) -> Properties:
         values = []
         for key, value in properties.items():
+            # 作成時刻と更新時刻はページ自体の情報として存在するため、プロパティには含めない
+            if value["type"] in ["created_time", "last_edited_time"]:
+                continue
             values.append(PropertyTranslator.from_property_dict(key, value))
         return Properties(values=[value for value in values if value is not None])
 
@@ -50,10 +51,6 @@ class PropertyTranslator:
                 return Url.of(key, property_)
             case "relation":
                 return Relation.of(key, property_)
-            case "last_edited_time":
-                return LastEditedTime.create(property_["last_edited_time"])
-            case "created_time":
-                return CreatedTime.create(property_["created_time"])
             case "rollup":
                 return Rollup.of(key, property_)
             case "button":
