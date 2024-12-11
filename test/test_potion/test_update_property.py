@@ -14,7 +14,6 @@ from properties.title import Title
 from properties.url import Url
 
 
-@pytest.mark.current()
 class TestUpdateProperty(TestCase):
     DATABASE_ID = "1596567a3bbf80d58251f1159e5c40fa"
 
