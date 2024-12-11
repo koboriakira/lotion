@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
-from src.properties.property import Property
+from properties.property import Property
+from src.properties.property import Property as PropertyAlt
 from src.properties.title import Title
 
 
@@ -10,7 +11,7 @@ class Properties:
 
     def __post_init__(self) -> None:
         for value in self.values:
-            if not isinstance(value, Property):
+            if not isinstance(value, Property) and not isinstance(value, PropertyAlt):
                 msg = f"values must be Property. value: {value}"
                 raise TypeError(msg)
 
