@@ -124,6 +124,7 @@ class Date(Property):
             },
         }
 
+    @property
     def type(self) -> str:
         return "date"
 
