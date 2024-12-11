@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from datetime import date, datetime
 
-from src.properties.property import Property
 from src.datetime_utils import convert_to_date_or_datetime
+from src.properties.property import Property
 
 
 @dataclass
@@ -10,7 +10,6 @@ class Date(Property):
     start: str | None = None
     end: str | None = None
     time_zone: str | None = None
-    type: str = "date"
 
     DEFAULT_NAME = "日付"
 
@@ -79,18 +78,14 @@ class Date(Property):
         )
 
     @staticmethod
-    def from_start_date(
-        name: str = DEFAULT_NAME, start_date: date | datetime | None = None
-    ) -> "Date":
+    def from_start_date(name: str = DEFAULT_NAME, start_date: date | datetime | None = None) -> "Date":
         return Date(
             name=name,
             start=start_date.isoformat() if start_date is not None else None,
         )
 
     @staticmethod
-    def from_range(
-        start: date | datetime, end: date | datetime, name: str = DEFAULT_NAME
-    ) -> "Date":
+    def from_range(start: date | datetime, end: date | datetime, name: str = DEFAULT_NAME) -> "Date":
         return Date(
             name=name,
             start=start.isoformat(),
@@ -128,6 +123,9 @@ class Date(Property):
                 "date": _date,
             },
         }
+
+    def type(self) -> str:
+        return "date"
 
     def value_for_filter(self) -> str:
         return self.start
