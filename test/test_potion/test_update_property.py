@@ -100,13 +100,19 @@ class TestUpdateProperty(TestCase):
     @pytest.mark.post_api()
     def test_リレーションを変更する(self):
         # Given
-        page_id = PageId("1596567a3bbf80af8042c36cf78f92e4")
+        related_page = self.suite.create_page_in_database(
+            database_id=self.DATABASE_ID, properties=[Title.from_plain_text(text="リレーション用ページ")]
+        )
+        page_id = PageId(related_page["id"])
         relation_prop = Relation.from_id(name="リレーション", id=page_id.value)
 
         # When, Then
         actual = self._update_page(property=relation_prop)
         actual_relation = actual.get_relation(name="リレーション")
         self.assertEqual(actual_relation.id_list, [page_id.value])
+
+        # Teardown
+        self.suite.remove_page(page_id.value)
 
     def _update_page(self, property: Property):
         # When
