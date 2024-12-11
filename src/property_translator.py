@@ -19,15 +19,15 @@ from src.properties.url import Url
 
 
 class PropertyTranslator:
-    @classmethod
-    def from_dict(cls: "PropertyTranslator", properties: dict[str, dict]) -> Properties:
+    @staticmethod
+    def from_dict(properties: dict[str, dict]) -> Properties:
         values = []
         for key, value in properties.items():
-            values.append(cls.from_property_dict(key, value))
+            values.append(PropertyTranslator.from_property_dict(key, value))
         return Properties(values=[value for value in values if value is not None])
 
-    @classmethod
-    def from_property_dict(cls: "PropertyTranslator", key: str, property_: dict[str, Any]) -> "Property":  # noqa: PLR0911
+    @staticmethod
+    def from_property_dict(key: str, property_: dict[str, Any]) -> "Property":  # noqa: PLR0911
         type_ = property_["type"]
         match type_:
             case "title":
