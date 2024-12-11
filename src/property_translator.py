@@ -1,5 +1,7 @@
 from typing import Any
 
+from properties.created_time import CreatedTime
+from properties.last_edited_time import LastEditedTime
 from src.properties.button import Button
 from src.properties.checkbox import Checkbox
 from src.properties.date import Date
@@ -21,9 +23,6 @@ class PropertyTranslator:
     def from_dict(properties: dict[str, dict]) -> Properties:
         values = []
         for key, value in properties.items():
-            # 作成時刻と更新時刻はページ自体の情報として存在するため、プロパティには含めない
-            if value["type"] in ["created_time", "last_edited_time"]:
-                continue
             values.append(PropertyTranslator.from_property_dict(key, value))
         return Properties(values=[value for value in values if value is not None])
 
@@ -55,6 +54,10 @@ class PropertyTranslator:
                 return Rollup.of(key, property_)
             case "button":
                 return Button.of(key, property_)
+            case "created_time":
+                return CreatedTime.of(key, property_)
+            case "last_edited_time":
+                return LastEditedTime.of(key, property_)
             case _:
                 msg = f"Unsupported property type: {type_} {property_}"
                 raise Exception(msg)

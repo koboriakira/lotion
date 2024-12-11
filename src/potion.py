@@ -4,15 +4,14 @@ from logging import Logger, getLogger
 from notion_client import Client
 from notion_client.errors import APIResponseError, HTTPResponseError
 
+from base_time import BaseTime
 from src.base_operator import BaseOperator
 from src.base_page import BasePage
 from src.block import Block, BlockFactory
 from src.filter.filter_builder import FilterBuilder
 from src.page.page_id import PageId
 from src.properties.cover import Cover
-from src.properties.created_time import CreatedTime
 from src.properties.icon import Icon
-from src.properties.last_edited_time import LastEditedTime
 from src.properties.properties import Properties
 from src.properties.property import Property
 from src.properties.title import Title
@@ -235,8 +234,8 @@ class Potion:
 
         id_ = PageId(page_entity["id"])
         url = page_entity["url"]
-        created_time = CreatedTime.create(page_entity["created_time"])
-        last_edited_time = LastEditedTime.create(page_entity["last_edited_time"])
+        created_time = BaseTime.of(page_entity["created_time"])
+        last_edited_time = BaseTime.of(page_entity["last_edited_time"])
         created_by = BaseOperator.of(page_entity["created_by"])
         last_edited_by = BaseOperator.of(page_entity["last_edited_by"])
         cover = Cover.of(page_entity["cover"]) if page_entity["cover"] is not None else None
